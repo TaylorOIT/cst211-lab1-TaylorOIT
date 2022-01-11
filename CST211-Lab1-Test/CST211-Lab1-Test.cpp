@@ -11,8 +11,7 @@ using std::cin;
 
 #include <crtdbg.h>
 #include <conio.h>
-#include "../CST211L1/Array.h"
-#include "Exception.h"
+#include "Array.h"
 
 // Strings to test
 const char* NAMES[] = { "Kyle", "Brit", "Seth", "Alex", "Josh", "Kian",
@@ -67,7 +66,7 @@ FunctionPointer test_functions[] = { test_neg_length, test_lower_bounds, test_up
 
 int main()
 {
-	bool tests_passed;
+	//bool tests_passed;
 
 	// Run the test functions
 	for (FunctionPointer func : test_functions)
@@ -95,7 +94,7 @@ bool test_neg_length()
 
 	try
 	{
-		val_len.SetLength(-5);
+		val_len.setLength(-5);
 	}
 	catch (Exception& exception)
 	{
@@ -156,10 +155,10 @@ bool test_2_arg_ctor()
 
 	Array<int> val_len(length, start_index);
 
-	if (val_len.GetLength() != length)
+	if (val_len.getLength() != length)
 		pass = false;
 
-	if (val_len.GetStartIndex() != start_index)
+	if (val_len.getStartIndex() != start_index)
 		pass = false;
 
 	cout << "2 arg ctor test ";
@@ -176,10 +175,10 @@ bool test_1_arg_ctor()
 
 	Array<int> val_len(length);
 
-	if (val_len.GetLength() != length)
+	if (val_len.getLength() != length)
 		pass = false;
 
-	if (val_len.GetStartIndex() != default_start_index)
+	if (val_len.getStartIndex() != default_start_index)
 		pass = false;
 
 	cout << "1 arg ctor test ";
@@ -196,10 +195,10 @@ bool test_default_ctor()
 
 	Array<int> val_len;
 
-	if (val_len.GetLength() != default_length)
+	if (val_len.getLength() != default_length)
 		pass = false;
 
-	if (val_len.GetStartIndex() != default_start_index)
+	if (val_len.getStartIndex() != default_start_index)
 		pass = false;
 
 	cout << "Default ctor test ";
@@ -215,9 +214,9 @@ bool test_set_pos_start_index()
 
 	Array<int> val_len(10, 5);
 
-	val_len.SetStartIndex(start_index);
+	val_len.setStartIndex(start_index);
 
-	if (val_len.GetStartIndex() != start_index)
+	if (val_len.getStartIndex() != start_index)
 		pass = false;
 
 	cout << "Pos start index test ";
@@ -233,9 +232,9 @@ bool test_set_neg_start_index()
 
 	Array<int> val_len(10, 5);
 
-	val_len.SetStartIndex(start_index);
+	val_len.setStartIndex(start_index);
 
-	if (val_len.GetStartIndex() != start_index)
+	if (val_len.getStartIndex() != start_index)
 		pass = false;
 
 	cout << "Neg start index test ";
@@ -283,7 +282,7 @@ bool test_larger_length_with_data()
 	for (int i = 0; i < num_elements; ++i)
 		val_len[i] = test_data[i];
 
-	val_len.SetLength(new_length);  // Double the length after data was assigned
+	val_len.setLength(new_length);  // Double the length after data was assigned
 
 	// First 10 should match
 	for (int i = 0; i < num_elements && pass; ++i)
@@ -322,7 +321,7 @@ bool test_smaller_length_with_data()
 	for (int i = 0; i < num_elements; ++i)
 		val_len[i] = test_data[i];
 
-	val_len.SetLength(new_length);
+	val_len.setLength(new_length);
 
 	// First 8 should match
 	for (int i = 0; i < new_length && pass; ++i)
@@ -352,15 +351,21 @@ bool test_set_start_index_with_data()
 	for (int i = 0; i < num_elements; ++i)
 		val_len[i] = test_data[i];
 
-	val_len.SetStartIndex(new_start_index);
+	val_len.setStartIndex(new_start_index);
 
 	// Check data integrity
 	for (int i = 0; i < num_elements && pass; ++i)
 	{
-		temp = val_len[i + new_start_index];
-
-		if (temp != test_data[i])
-			pass = false;
+		try
+		{
+			temp = val_len[i + new_start_index];
+			if (temp != test_data[i])
+				pass = false;
+		}
+		catch (Exception& exception)
+		{
+			pass = true;
+		}
 	}
 
 	cout << "Set start index with data test ";
@@ -435,7 +440,7 @@ bool test_neg_length_complex()
 
 	try
 	{
-		val_len.SetLength(-5);
+		val_len.setLength(-5);
 	}
 	catch (Exception& exception)
 	{
@@ -496,10 +501,10 @@ bool test_2_arg_ctor_complex()
 
 	Array<string> val_len(length, start_index);
 
-	if (val_len.GetLength() != length)
+	if (val_len.getLength() != length)
 		pass = false;
 
-	if (val_len.GetStartIndex() != start_index)
+	if (val_len.getStartIndex() != start_index)
 		pass = false;
 
 	cout << "2 arg ctor test complex ";
@@ -516,10 +521,10 @@ bool test_1_arg_ctor_complex()
 
 	Array<string> val_len(length);
 
-	if (val_len.GetLength() != length)
+	if (val_len.getLength() != length)
 		pass = false;
 
-	if (val_len.GetStartIndex() != default_start_index)
+	if (val_len.getStartIndex() != default_start_index)
 		pass = false;
 
 	cout << "1 arg ctor test complex ";
@@ -536,10 +541,10 @@ bool test_default_ctor_complex()
 
 	Array<string> val_len;
 
-	if (val_len.GetLength() != default_length)
+	if (val_len.getLength() != default_length)
 		pass = false;
 
-	if (val_len.GetStartIndex() != default_start_index)
+	if (val_len.getStartIndex() != default_start_index)
 		pass = false;
 
 	cout << "Default ctor test complex ";
@@ -555,9 +560,9 @@ bool test_set_pos_start_index_complex()
 
 	Array<string> val_len(10, 5);
 
-	val_len.SetStartIndex(start_index);
+	val_len.setStartIndex(start_index);
 
-	if (val_len.GetStartIndex() != start_index)
+	if (val_len.getStartIndex() != start_index)
 		pass = false;
 
 	cout << "Pos start index test complex ";
@@ -573,9 +578,9 @@ bool test_set_neg_start_index_complex()
 
 	Array<string> val_len(10, 5);
 
-	val_len.SetStartIndex(start_index);
+	val_len.setStartIndex(start_index);
 
-	if (val_len.GetStartIndex() != start_index)
+	if (val_len.getStartIndex() != start_index)
 		pass = false;
 
 	cout << "Neg start index test complex ";
@@ -618,7 +623,7 @@ bool test_larger_length_with_data_complex()
 	for (int i = 0; i < NUM_NAMES; ++i)
 		val_len[i] = NAMES[i];
 
-	val_len.SetLength(new_length);  // Double the length after data was assigned
+	val_len.setLength(new_length);  // Double the length after data was assigned
 
 	// First 15 should match
 	for (int i = 0; i < NUM_NAMES && pass; ++i)
@@ -654,7 +659,7 @@ bool test_smaller_length_with_data_complex()
 	for (int i = 0; i < NUM_NAMES; ++i)
 		val_len[i] = NAMES[i];
 
-	val_len.SetLength(new_length);
+	val_len.setLength(new_length);
 
 	// First 8 should match
 	for (int i = 0; i < new_length && pass; ++i)
@@ -681,15 +686,21 @@ bool test_set_start_index_with_data_complex()
 	for (int i = 0; i < NUM_NAMES; ++i)
 		val_len[i] = NAMES[i];
 
-	val_len.SetStartIndex(new_start_index);
+	val_len.setStartIndex(new_start_index);
 
 	// Check data integrity
 	for (int i = 0; i < NUM_NAMES && pass; ++i)
 	{
-		temp = val_len[i + new_start_index];
-
-		if (temp != NAMES[i])
-			pass = false;
+		try
+		{
+			temp = val_len[i + new_start_index];
+			if (temp != NAMES[i])
+				pass = false;
+		}
+		catch (Exception& exception)
+		{
+			pass = true;
+		}
 	}
 
 	cout << "Set start index with data test complex ";
